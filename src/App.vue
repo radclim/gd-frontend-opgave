@@ -1,9 +1,14 @@
 <template>
   <main>
     <MainHeader :count="count" />
+    <ModeSwitcher :current-view="view" @updateView="updateView" />
     <div>
-      <AlbumList v-for="(album, index) in albums" :key="index" :album="album" />
-      <!-- <AlbumCard v-for="(album, index) in albums" :key="index" :album="album" /> -->
+      <div v-if="view == 'list'">
+        <AlbumList v-for="(album, index) in albums" :key="index" :album="album" />
+      </div>
+      <div v-else>
+        <AlbumCard v-for="(album, index) in albums" :key="index" :album="album" />
+      </div>
     </div>
   </main>
 </template>
@@ -13,8 +18,15 @@ import { ref, onMounted } from 'vue'
 import MainHeader from './components/MainHeader.vue'
 import AlbumCard from './components/AlbumCard.vue'
 import AlbumList from './components/AlbumList.vue'
+import ModeSwitcher from './components/ModeSwitcher.vue'
 const albums = ref([])
 const count = ref(0)
+
+const view = ref(null)
+const updateView = (newView) => {
+  view.value = newView
+  localStorage.setItem('viewMode', newView)
+}
 
 const fetchUserData = async () => {
   try {
@@ -33,6 +45,10 @@ const fetchUserData = async () => {
 
 onMounted(() => {
   fetchUserData()
+  const savedView = localStorage.getItem('viewMode') || 'list'
+  if (savedView) {
+    view.value = savedView
+  }
 })
 </script>
 
