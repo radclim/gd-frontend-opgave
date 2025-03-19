@@ -2,7 +2,8 @@
   <main>
     <MainHeader :count="count" />
     <div>
-      <AlbumCard v-for="(album, index) in albums" :key="index" :album="album" />
+      <AlbumList v-for="(album, index) in albums" :key="index" :album="album" />
+      <!-- <AlbumCard v-for="(album, index) in albums" :key="index" :album="album" /> -->
     </div>
   </main>
 </template>
@@ -11,6 +12,7 @@
 import { ref, onMounted } from 'vue'
 import MainHeader from './components/MainHeader.vue'
 import AlbumCard from './components/AlbumCard.vue'
+import AlbumList from './components/AlbumList.vue'
 const albums = ref([])
 const count = ref(0)
 
