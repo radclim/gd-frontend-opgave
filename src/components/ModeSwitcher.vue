@@ -1,20 +1,20 @@
 <template>
   <div class="flex gap-4">
     <img
-      v-if="currentView == 'card'"
+      v-if="currentView == 'list'"
       @click="updateView('list')"
-      src="../assets/svg/List view_outline.svg"
+      src="../assets/svg/List view_solid.svg"
       alt=""
     />
-    <img v-else @click="updateView('list')" src="../assets/svg/List view_solid.svg" alt="" />
+    <img v-else @click="updateView('list')" src="../assets/svg/List view_outline.svg" alt="" />
 
     <img
-      v-if="currentView == 'list'"
+      v-if="currentView == 'card'"
       @click="updateView('card')"
-      src="../assets/svg/Card view_outline.svg"
+      src="../assets/svg/Card view_solid.svg"
       alt=""
     />
-    <img v-else @click="updateView('card')" src="../assets/svg/Card view_solid.svg" alt="" />
+    <img v-else @click="updateView('card')" src="../assets/svg/Card view_outline.svg" alt="" />
   </div>
 </template>
 <script setup>
