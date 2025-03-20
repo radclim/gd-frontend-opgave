@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick">
+  <div class="hover:cursor-pointer" @click="handleClick">
     <img :src="album.strAlbumThumb" alt="" />
   </div>
 </template>

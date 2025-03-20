@@ -1,7 +1,9 @@
 <template>
-  <main>
+  <header class="w-[45%]">
     <MainHeader :count="count" />
     <ModeSwitcher :current-view="view" @updateView="updateView" />
+  </header>
+  <main class="w-[45%]">
     <div>
       <div v-if="view == 'list'">
         <AlbumList
@@ -11,7 +13,7 @@
           @viewAlbum="viewAlbum"
         />
       </div>
-      <div v-if="view == 'card'">
+      <div v-if="view == 'card'" class="grid grid-cols-3 gap-1.5">
         <AlbumCard
           v-for="(album, index) in albums"
           :key="index"
