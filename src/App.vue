@@ -22,7 +22,7 @@
         />
       </div>
       <div v-if="selectedAlbum && view == 'single'">
-        <AlbumSingle :album="selectedAlbum" />
+        <AlbumSingle :album="selectedAlbum" @goBack="goBack" />
       </div>
     </div>
   </main>
@@ -48,6 +48,11 @@ const updateView = (newView) => {
 const viewAlbum = (album) => {
   selectedAlbum.value = album
   view.value = 'single'
+}
+
+const goBack = () => {
+  view.value = 'list'
+  selectedAlbum.value = null
 }
 
 const fetchUserData = async () => {
