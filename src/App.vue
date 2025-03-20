@@ -4,27 +4,31 @@
     <ModeSwitcher :current-view="view" @updateView="updateView" />
   </header>
   <main class="w-[45%]">
-    <div>
-      <div v-if="view == 'list'">
-        <AlbumList
-          v-for="(album, index) in albums"
-          :key="index"
-          :album="album"
-          @viewAlbum="viewAlbum"
-        />
+    <transition name="fade" mode="out-in">
+      <div :key="view">
+        <div v-if="view === 'list'">
+          <AlbumList
+            v-for="(album, index) in albums"
+            :key="index"
+            :album="album"
+            @viewAlbum="viewAlbum"
+          />
+        </div>
+
+        <div v-else-if="view === 'card'" class="grid grid-cols-3 gap-1.5">
+          <AlbumCard
+            v-for="(album, index) in albums"
+            :key="index"
+            :album="album"
+            @viewAlbum="viewAlbum"
+          />
+        </div>
+
+        <div v-else-if="selectedAlbum && view === 'single'">
+          <AlbumSingle :album="selectedAlbum" @goBack="goBack" />
+        </div>
       </div>
-      <div v-if="view == 'card'" class="grid grid-cols-3 gap-1.5">
-        <AlbumCard
-          v-for="(album, index) in albums"
-          :key="index"
-          :album="album"
-          @viewAlbum="viewAlbum"
-        />
-      </div>
-      <div v-if="selectedAlbum && view == 'single'">
-        <AlbumSingle :album="selectedAlbum" @goBack="goBack" />
-      </div>
-    </div>
+    </transition>
   </main>
 </template>
 
@@ -48,14 +52,17 @@ const updateView = (newView) => {
 const viewAlbum = (album) => {
   selectedAlbum.value = album
   view.value = 'single'
+  localStorage.setItem('viewMode', 'single')
+  localStorage.setItem('selectedAlbum', JSON.stringify(album))
 }
 
 const goBack = () => {
   view.value = 'list'
   selectedAlbum.value = null
+  localStorage.setItem('selectedAlbum', null)
 }
 
-const fetchUserData = async () => {
+const fetchAlbumData = async () => {
   try {
     const response = await fetch('https://www.theaudiodb.com/api/v1/json/2/album.php?i=112035')
     const data = await response.json()
@@ -71,12 +78,25 @@ const fetchUserData = async () => {
 }
 
 onMounted(() => {
-  fetchUserData()
+  fetchAlbumData()
   const savedView = localStorage.getItem('viewMode') || 'list'
+  const savedAlbum = localStorage.getItem('selectedAlbum') || null
   if (savedView) {
     view.value = savedView
+  }
+  if (savedAlbum && savedView === 'single') {
+    selectedAlbum.value = JSON.parse(savedAlbum)
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
