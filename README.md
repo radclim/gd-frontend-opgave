@@ -1,4 +1,4 @@
-<h1>Gyldendal Frontend Opgave</h1>
+<h1>Album Frontend Opgave</h1>
 <p>Dette projekt er en frontend-applikation, der bruger Vue til at hente og vise albumdata fra mit yndlingsband, The Strokes, fra TheAudioDB API.</p>
 
 <p>Projektet inkluderer:</p>
