@@ -7,10 +7,11 @@
     <p class="text-gray-600 mt-1.5">
       <b>{{ album.strAlbum }}.</b> {{ album.strDescriptionEN }}
     </p>
-    <!-- <hr class="mt-6 mb-6 border-t-1 border-gray-200" /> -->
   </div>
 </template>
 <script setup>
+import { onMounted } from 'vue'
+
 const props = defineProps({
   album: Object,
 })
@@ -19,5 +20,8 @@ const emit = defineEmits(['viewAlbum'])
 const handleClick = () => {
   emit('viewAlbum', props.album)
 }
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 </script>
 <style></style>

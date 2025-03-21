@@ -27,6 +27,9 @@
         <div v-else-if="selectedAlbum && view === 'single'">
           <AlbumSingle :album="selectedAlbum" @goBack="goBack" />
         </div>
+        <div v-if="err" class="flex justify-center">
+          <p class="error">{{ err }}</p>
+        </div>
       </div>
     </transition>
   </main>
@@ -43,6 +46,7 @@ const albums = ref([])
 const count = ref(0)
 const view = ref(null)
 const selectedAlbum = ref(null)
+const err = ref(null)
 
 const updateView = (newView) => {
   view.value = newView
@@ -73,6 +77,8 @@ const fetchAlbumData = async () => {
       }
     }
   } catch (error) {
+    err.value = 'Error fetching album data.'
+    console.log(err.value)
     console.error('Error fetching album data:', error)
   }
 }

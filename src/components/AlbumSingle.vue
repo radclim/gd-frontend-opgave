@@ -16,7 +16,9 @@
         {{ track.strTrack }}
       </li>
     </ul>
-    <p @click="handleClick" class="text-gray-800 hover:cursor-pointer mt-3">← Back to overview</p>
+    <p @click="handleClick" class="text-gray-800 hover:cursor-pointer mt-3 mb-6">
+      ← Back to overview
+    </p>
   </div>
 </template>
 <script setup>
@@ -49,6 +51,7 @@ const fetchTracks = async () => {
 }
 
 onMounted(() => {
+  window.scrollTo(0, 0)
   fetchTracks()
 })
 </script>
